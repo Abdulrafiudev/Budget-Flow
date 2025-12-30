@@ -20,7 +20,7 @@ export async function requestNotificationPermission(): Promise<boolean> {
 
 export async function scheduleNotification(
   budgetId: string,
-  incomeEntryId: string,
+  incomeEntryId: string | null,
   amount: number,
   currency: "USD" | "NGN",
   distribution: {
@@ -68,7 +68,7 @@ export async function scheduleNotification(
 
 export async function scheduleTestNotification(
   budgetId: string,
-  incomeEntryId: string,
+  incomeEntryId: string | null,
   amount: number,
   currency: "USD" | "NGN",
   distribution: {

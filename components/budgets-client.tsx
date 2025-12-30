@@ -136,6 +136,7 @@ export default function BudgetsClient({
         availableMonths={availableMonths}
         userId={user.id}
         year={currentYear}
+        currency={profile?.currency || "USD"}
       />
     </div>
   );
