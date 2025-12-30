@@ -15,7 +15,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/client";
 import IncomeCelebrationModal from "@/components/income-celebration-modal";
-import { scheduleNotification } from "@/lib/notification-utils";
+import {
+  scheduleNotification,
+  scheduleTestNotification,
+} from "@/lib/notification-utils";
 import { calculateDistribution } from "@/lib/budget-utils";
 import type { Budget, IncomeEntry } from "@/lib/types";
 import { toast } from "sonner";
@@ -120,7 +123,7 @@ export default function AddIncomeDialog({
           }
         );
 
-        await scheduleNotification(
+        await scheduleTestNotification(
           budget.id,
           data.id,
           incomeAmount,
