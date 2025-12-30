@@ -42,9 +42,9 @@ export async function scheduleNotification(
       const registration = await navigator.serviceWorker.ready;
 
       // Schedule notification for 24 hours from now
-      // const scheduledTime = Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+      const scheduledTime = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
 
-      const scheduledTime = Date.now() + 5 * 60 * 1000; // 5 minutes
+      // const scheduledTime = Date.now() + 5 * 60 * 1000; // 5 minutes
 
       // Store notification data in service worker
       if (registration.active) {
