@@ -1,9 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import Link from "next/link"
-import { ArrowRight, PieChart, TrendingUp, Wallet, BarChart3 } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import Link from "next/link";
+import {
+  ArrowRight,
+  PieChart,
+  TrendingUp,
+  Wallet,
+  BarChart3,
+} from "lucide-react";
 
 export default function LandingPage() {
   return (
@@ -30,11 +36,13 @@ export default function LandingPage() {
       <section className="container mx-auto px-4 py-20 md:py-32">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">
-            Manage Your Money with <span className="text-primary">Confidence</span>
+            Manage Your Money with{" "}
+            <span className="text-primary">Confidence</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 text-pretty">
-            Automatically distribute your income across spending, investments, and savings using proven budget plans.
-            Track expenses and watch your wealth grow month by month.
+            Automatically distribute your income across spending, investments,
+            and savings using proven budget plans. Track expenses and watch your
+            wealth grow month by month.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" asChild>
@@ -52,7 +60,9 @@ export default function LandingPage() {
       {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-20">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Powerful Features
+          </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Everything you need to take control of your finances
           </p>
@@ -65,8 +75,8 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Smart Distribution</h3>
             <p className="text-muted-foreground">
-              Choose from proven budget plans like 50/30/20 or 70/15/15, or create your own custom distribution
-              strategy.
+              Choose from proven budget plans like 50/30/20 or 70/15/15, or
+              create your own custom distribution strategy.
             </p>
           </Card>
 
@@ -76,7 +86,8 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Expense Tracking</h3>
             <p className="text-muted-foreground">
-              Log actual spending against your budget and see how much you have left in each category in real-time.
+              Log actual spending against your budget and see how much you have
+              left in each category in real-time.
             </p>
           </Card>
 
@@ -86,7 +97,8 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Monthly Insights</h3>
             <p className="text-muted-foreground">
-              View detailed breakdowns for each month and track year-round totals to see your financial progress.
+              View detailed breakdowns for each month and track year-round
+              totals to see your financial progress.
             </p>
           </Card>
 
@@ -96,13 +108,19 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Multiple Accounts</h3>
             <p className="text-muted-foreground">
-              See exactly how much should be in your spending, investment, and savings accounts at any time.
+              See exactly how much should be in your spending, investment, and
+              savings accounts at any time.
             </p>
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-shadow">
             <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-              <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="h-6 w-6 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -113,13 +131,19 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Secure & Private</h3>
             <p className="text-muted-foreground">
-              Your financial data is encrypted and protected with enterprise-grade security.
+              Your financial data is encrypted and protected with
+              enterprise-grade security.
             </p>
           </Card>
 
           <Card className="p-6 hover:shadow-lg transition-shadow">
             <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-              <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="h-6 w-6 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -130,7 +154,8 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Year-Round View</h3>
             <p className="text-muted-foreground">
-              Plan and track your finances across all 12 months with easy navigation between periods.
+              Plan and track your finances across all 12 months with easy
+              navigation between periods.
             </p>
           </Card>
         </div>
@@ -139,9 +164,12 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20">
         <Card className="bg-primary text-primary-foreground p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Take Control?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Ready to Take Control?
+          </h2>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Join thousands of users who are successfully managing their finances with BudgetFlow.
+            Join thousands of users who are successfully managing their finances
+            with BudgetFlow.
           </p>
           <Button size="lg" variant="secondary" asChild>
             <Link href="/auth/sign-up">
@@ -154,9 +182,9 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>© 2025 BudgetFlow. All rights reserved.</p>
+          <p>© 2026 BudgetFlow. All rights reserved.</p>
         </div>
       </footer>
     </div>
-  )
+  );
 }

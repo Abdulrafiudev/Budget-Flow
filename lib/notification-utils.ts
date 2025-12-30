@@ -2,20 +2,20 @@
 
 export async function requestNotificationPermission(): Promise<boolean> {
   if (!("Notification" in window)) {
-    console.log("This browser does not support notifications")
-    return false
+    console.log("This browser does not support notifications");
+    return false;
   }
 
   if (Notification.permission === "granted") {
-    return true
+    return true;
   }
 
   if (Notification.permission !== "denied") {
-    const permission = await Notification.requestPermission()
-    return permission === "granted"
+    const permission = await Notification.requestPermission();
+    return permission === "granted";
   }
 
-  return false
+  return false;
 }
 
 export async function scheduleNotification(
@@ -24,25 +24,27 @@ export async function scheduleNotification(
   amount: number,
   currency: "USD" | "NGN",
   distribution: {
-    spend_amount: number
-    investment_amount: number
-    savings_amount: number
-  },
+    spend_amount: number;
+    investment_amount: number;
+    savings_amount: number;
+  }
 ) {
   // Request permission if not already granted
-  const hasPermission = await requestNotificationPermission()
+  const hasPermission = await requestNotificationPermission();
   if (!hasPermission) {
-    console.log("Notification permission not granted")
-    return
+    console.log("Notification permission not granted");
+    return;
   }
 
   // Register service worker if not already registered
   if ("serviceWorker" in navigator) {
     try {
-      const registration = await navigator.serviceWorker.ready
+      const registration = await navigator.serviceWorker.ready;
 
       // Schedule notification for 24 hours from now
-      const scheduledTime = Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+      // const scheduledTime = Date.now() + 24 * 60 * 60 * 1000 // 24 hours
+
+      const scheduledTime = Date.now() + 5 * 60 * 1000; // 5 minutes
 
       // Store notification data in service worker
       if (registration.active) {
@@ -56,23 +58,27 @@ export async function scheduleNotification(
             currency,
             distribution,
           },
-        })
+        });
       }
 
-      console.log("[v0] Notification scheduled for 24 hours from now")
+      console.log("[v0] Notification scheduled for 24 hours from now");
     } catch (error) {
-      console.error("Failed to schedule notification:", error)
+      console.error("Failed to schedule notification:", error);
     }
   }
 }
 
-export function showImmediateNotification(title: string, body: string, data?: Record<string, unknown>): void {
+export function showImmediateNotification(
+  title: string,
+  body: string,
+  data?: Record<string, unknown>
+): void {
   if (Notification.permission === "granted") {
     new Notification(title, {
       body,
       icon: "/icon-192x192.jpg",
       badge: "/icon-192x192.jpg",
       data,
-    })
+    });
   }
 }
