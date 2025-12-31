@@ -28,7 +28,7 @@ export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
+  console.log("frontendurl", process.env.NEXT_PUBLIC_FRONTEND_URL);
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     const supabase = createClient();
@@ -49,13 +49,12 @@ export default function SignUpPage() {
 
     try {
       const currency = await getUserCurrency();
-      console.log("Currency selected:", currency);
 
       const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/dashboard`,
           data: {
             full_name: fullName,
             currency,
