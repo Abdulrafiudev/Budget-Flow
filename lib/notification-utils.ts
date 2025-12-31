@@ -59,7 +59,7 @@ export async function scheduleNotification(
         });
       }
 
-      console.log("[v0] Notification scheduled for 24 hours from now");
+      console.log(" Notification scheduled for 24 hours from now");
     } catch (error) {
       console.error("Failed to schedule notification:", error);
     }

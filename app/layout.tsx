@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   title: "BudgetFlow - Smart Budget Management",
   description:
     "Automatically distribute your income across spending, investments, and savings using proven budget plans. Track expenses and manage your finances with confidence.",
-  generator: "v0.app",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -21,6 +20,18 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
       {
         url: "/icon-192x192.jpg",
         sizes: "192x192",
@@ -32,7 +43,10 @@ export const metadata: Metadata = {
         type: "image/png",
       },
     ],
-    apple: "/icon-512x512.jpg",
+    apple: [
+      { url: "/icon-192x192.jpg", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.jpg", sizes: "512x512", type: "image/png" },
+    ],
   },
 };
 
@@ -46,9 +60,15 @@ export default function RootLayout({
       <head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
         <meta name="theme-color" content="#2563eb" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <link rel="apple-touch-icon" href="/icon-192x192.jpg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

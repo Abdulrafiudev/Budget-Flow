@@ -2,7 +2,7 @@
   "name": "BudgetFlow - Smart Budget Management",
   "short_name": "BudgetFlow",
   "description": "Automatically distribute your income across spending, investments, and savings using proven budget plans",
-  "start_url": "/",
+  "start_url": "/auth/login",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
