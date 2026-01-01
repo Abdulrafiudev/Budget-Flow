@@ -1,13 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Wallet, Receipt, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useTransition } from "react";
 
 interface AppNavProps {
   userEmail: string;
@@ -17,6 +17,7 @@ interface AppNavProps {
 export default function AppNav({ userEmail, userName }: AppNavProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -24,6 +25,12 @@ export default function AppNav({ userEmail, userName }: AppNavProps) {
     toast.success("Logged out successfully");
     router.push("/");
     router.refresh();
+  };
+
+  const handleNavigate = (href: string) => {
+    startTransition(() => {
+      router.push(href);
+    });
   };
 
   const navItems = [
@@ -52,6 +59,9 @@ export default function AppNav({ userEmail, userName }: AppNavProps) {
           <div className="flex items-center gap-2">
             <Wallet className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">BudgetFlow</span>
+            {isPending && (
+              <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            )}
           </div>
         </div>
 
@@ -60,19 +70,21 @@ export default function AppNav({ userEmail, userName }: AppNavProps) {
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
-              <Link
+              <button
                 key={item.href}
-                href={item.href}
+                onClick={() => handleNavigate(item.href)}
+                disabled={isPending}
                 className={cn(
-                  "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
+                  "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left",
                   isActive
                     ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground",
+                  isPending && "opacity-70 cursor-wait"
                 )}
               >
                 <Icon className="h-5 w-5" />
                 <span className="font-medium">{item.label}</span>
-              </Link>
+              </button>
             );
           })}
         </nav>
@@ -104,17 +116,19 @@ export default function AppNav({ userEmail, userName }: AppNavProps) {
             const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
-              <Link
+              <button
                 key={item.href}
-                href={item.href}
+                onClick={() => handleNavigate(item.href)}
+                disabled={isPending}
                 className={cn(
                   "flex flex-col items-center gap-1 px-4 py-2 flex-1",
-                  isActive ? "text-primary" : "text-muted-foreground"
+                  isActive ? "text-primary" : "text-muted-foreground",
+                  isPending && "opacity-70"
                 )}
               >
                 <Icon className="h-5 w-5" />
                 <span className="text-xs font-medium">{item.label}</span>
-              </Link>
+              </button>
             );
           })}
           <button

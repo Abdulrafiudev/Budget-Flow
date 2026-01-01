@@ -18,11 +18,23 @@ import {
   Wallet,
   Plus,
   DollarSign,
+  Trash2,
 } from "lucide-react";
 import type { Budget, Expense, Currency, IncomeEntry } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
 import AddExpenseDialog from "./add-expense-dialog";
 import AddIncomeDialog from "./add-income-dialog";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface MonthlyBudgetCardProps {
   budget: Budget;
@@ -40,6 +52,8 @@ export default function MonthlyBudgetCard({
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
   const [isAddIncomeOpen, setIsAddIncomeOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   useEffect(() => {
     loadExpenses();
@@ -96,6 +110,30 @@ export default function MonthlyBudgetCard({
     }
   };
 
+  const handleDeleteBudget = async () => {
+    setIsDeleting(true);
+    const supabase = createClient();
+
+    try {
+      const { error } = await supabase
+        .from("budgets")
+        .delete()
+        .eq("id", budget.id);
+
+      if (error) throw error;
+
+      toast.success("Budget deleted successfully");
+      // Refresh the page or trigger a parent update
+      window.location.reload();
+    } catch (error: any) {
+      console.error("[v0] Error deleting budget:", error);
+      toast.error(error.message || "Failed to delete budget");
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteDialogOpen(false);
+    }
+  };
+
   const totalIncome =
     budget.income +
     incomeEntries.reduce(
@@ -144,7 +182,18 @@ export default function MonthlyBudgetCard({
                 )}
               </CardDescription>
             </div>
-            <Badge variant="outline">{budget.plan_type}</Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline">{budget.plan_type}</Badge>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                onClick={() => setIsDeleteDialogOpen(true)}
+                disabled={isDeleting}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -279,6 +328,36 @@ export default function MonthlyBudgetCard({
         budget={budget}
         currency={currency}
       />
+
+      {/* Delete Confirmation Modal */}
+      <AlertDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete the budget for{" "}
+              {MONTHS[budget.month - 1]} {budget.year} and all associated
+              expenses and income entries. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDeleteBudget();
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete Budget"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }
